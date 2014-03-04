@@ -1,0 +1,10 @@
+User Characteristics - Clearly identify all users
+Constraints
+    *Limitations
+    *Dependencies
+
+    Functional -------> Constrints
+    Non Functional      Limitation
+                        internal interface
+                        external interface
+                        dependency
