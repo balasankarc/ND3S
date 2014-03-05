@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*
 import gtk
 import sys
+import pango
 
 
 class Base:
@@ -32,6 +33,11 @@ class Base:
 
     def __init__(self):
         self.window = gtk.Window()
+        pixbuf=gtk.gdk.pixbuf_new_from_file('assets/images/bg.jpg')
+        pixmap, mask=pixbuf.render_pixmap_and_mask()
+        self.window.set_app_paintable(gtk.TRUE)
+        self.window.realize()
+        self.window.window.set_back_pixmap(pixmap,gtk.FALSE)
         self.window.set_title("ND3S")
         self.window.set_size_request(300, 300)
         self.window.connect("destroy", self.closewindow)
@@ -48,6 +54,8 @@ class Base:
         self.file2content.set_property('editable', False)
         self.file1content.set_wrap_mode(gtk.WRAP_WORD)
         self.file2content.set_wrap_mode(gtk.WRAP_WORD)
+        self.label1 = gtk.Label()
+        self.label1.modify_font(pango.FontDescription("BankGothic 30"))
         self.scrollwindow1.add(self.file1content)
         self.scrollwindow2.add(self.file2content)
         self.scrollwindow1.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
@@ -55,11 +63,13 @@ class Base:
         self.scrollwindow1.set_shadow_type(type=gtk.SHADOW_ETCHED_IN)
         self.scrollwindow2.set_shadow_type(type=gtk.SHADOW_ETCHED_IN)
         self.file1content.set_size_request(500, 500)
-        self.fixed.put(self.scrollwindow1, 10, 80)
+        self.fixed.put(self.scrollwindow1, 10, 120)
         self.file2content.set_size_request(500, 500)
-        self.fixed.put(self.scrollwindow2, 600, 80)
-        self.fixed.put(self.file1button, 10, 10)
-        self.fixed.put(self.file2button, 600, 10)
+        self.fixed.put(self.scrollwindow2, 600, 120)
+        self.fixed.put(self.file1button, 10, 80)
+        self.fixed.put(self.file2button, 600, 80)
+        self.label1.set_markup(u"Near Duplicate Document Detection System for <span color='#990000'><b>മലയാളം</b></span>")
+        self.fixed.put(self.label1, 10, 30)
         self.helpbox = gtk.VBox(spacing=10)
         self.exitbutton = gtk.Button("Exit")
         self.exitbutton.connect("clicked", self.closewindow)
@@ -68,7 +78,7 @@ class Base:
         self.helpbox.set_size_request(100, 100)
         self.helpbox.pack_start(self.exitbutton)
         self.helpbox.pack_start(self.helpbutton)
-        self.fixed.put(self.helpbox, 1200, 10)
+        self.fixed.put(self.helpbox, 1200, 80)
         self.window.add(self.fixed)
         self.window.show()
         self.window.show_all()
