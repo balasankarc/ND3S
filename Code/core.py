@@ -7,6 +7,18 @@ import pango
 
 class Base:
 
+    def compareinit(self, widget):
+        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u" ഇപ്പോ സൗകര്യമില്ല   ")
+        dialog.set_title("Compare")
+        dialog.run()
+        dialog.destroy()
+
+    def windowclick(self, widget):
+        print "Here:"
+
+    def changethreshold(self, widget, data):
+        self.thresholdtext.set_text("")
+
     def filechoose(self, widget, *data):
         """Function to choose input files"""
         dialog = gtk.FileChooserDialog("Select File", None, gtk.FILE_CHOOSER_ACTION_OPEN, (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
@@ -33,8 +45,8 @@ class Base:
 
     def __init__(self):
         self.window = gtk.Window()
-        pixbuf=gtk.gdk.pixbuf_new_from_file('assets/images/bg.jpg')
-        pixmap, mask=pixbuf.render_pixmap_and_mask()
+        pixbuf = gtk.gdk.pixbuf_new_from_file('assets/images/bg.jpg')
+        pixmap, mask = pixbuf.render_pixmap_and_mask()
         self.window.set_app_paintable(gtk.TRUE)
         self.window.realize()
         self.window.window.set_back_pixmap(pixmap,gtk.FALSE)
@@ -55,7 +67,7 @@ class Base:
         self.file1content.set_wrap_mode(gtk.WRAP_WORD)
         self.file2content.set_wrap_mode(gtk.WRAP_WORD)
         self.label1 = gtk.Label()
-        self.label1.modify_font(pango.FontDescription("BankGothic 30"))
+        self.label1.modify_font(pango.FontDescription("GEronto Bis 37"))
         self.scrollwindow1.add(self.file1content)
         self.scrollwindow2.add(self.file2content)
         self.scrollwindow1.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
@@ -68,17 +80,25 @@ class Base:
         self.fixed.put(self.scrollwindow2, 600, 120)
         self.fixed.put(self.file1button, 10, 80)
         self.fixed.put(self.file2button, 600, 80)
-        self.label1.set_markup(u"Near Duplicate Document Detection System for <span color='#990000'><b>മലയാളം</b></span>")
+        self.label1.set_markup(u"Near Duplicate Document Detection System for <span color='#ffffff'><b>മലയാളം</b></span>")
+ #       self.window.connect("button-click-event",self.windowclick)
         self.fixed.put(self.label1, 10, 30)
-        self.helpbox = gtk.VBox(spacing=10)
+        self.helpbox = gtk.VBox(spacing=30)
+        self.thresholdtext = gtk.Entry()
+        self.thresholdtext.set_text("Threshold")
+        self.thresholdtext.connect("focus-in-event",self.changethreshold)
         self.exitbutton = gtk.Button("Exit")
         self.exitbutton.connect("clicked", self.closewindow)
         self.helpbutton = gtk.Button("Help")
         self.helpbutton.connect("clicked", self.helpfunction)
-        self.helpbox.set_size_request(100, 100)
+        self.comparebutton = gtk.Button("Compare!")
+        self.comparebutton.connect("clicked",self.compareinit)
+        self.helpbox.set_size_request(100, 300)
+        self.helpbox.pack_start(self.thresholdtext)
+        self.helpbox.pack_start(self.comparebutton)
         self.helpbox.pack_start(self.exitbutton)
         self.helpbox.pack_start(self.helpbutton)
-        self.fixed.put(self.helpbox, 1200, 80)
+        self.fixed.put(self.helpbox, 1200, 120)
         self.window.add(self.fixed)
         self.window.show()
         self.window.show_all()
