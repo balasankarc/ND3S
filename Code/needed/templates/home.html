@@ -1,0 +1,75 @@
+<!doctype html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+	
+	$(document).ready(function(){  
+	$("#get_form").submit(function(event){
+
+	var inpt1= $("#datafile1").val(); //form.datafile1.value;
+	var inpt2= $("#datafile2").val();
+	
+    		
+	$.ajax({
+ 	 type: 'GET' ,
+  	url: '/start' ,
+	 data: { inpt1: inpt1, inpt2: inpt2},
+ success:function(data) {
+                         if(data!=null){
+                            $('#ajax_panel').empty();
+                            opdata = data['data'];
+                          
+  				alert(opdata);
+                            
+                            }
+                         else {
+                            $('#ajax_panel').html('<p class="error"><strong>Invalid</strong> user name.</p>');
+                          
+                            }
+                            },
+                    error:function(){
+                        $('#ajax_panel').html('<p class="error"><strong>Oops!</strong> Something went wrong.</p>');
+                     
+  		}
+                   
+  	});
+alert("hello")
+	});
+	});
+	
+    </script>
+</head>
+
+
+<body>
+<style type="text/css">
+  body {
+    color: white;
+    background-color: grey }
+  </style>
+           <header>
+            <h1>The program to check the similarity of two documents</h1>
+        </header>
+        <form id="get_form">
+		<div>
+		<p>
+		Please specify the first file:
+		<input type="file" name="datafile1" id="datafile1" size="40">
+		</p>
+		<p>
+		<br>Please specify the second file:
+		<input type="file" name="datafile2" id="datafile2" size="40">
+		</p>
+		<div>
+		<input type="submit" id="get_data" value="Check Similarity">
+		</div>
+		</div>
+<div id="ajax_panel"></div>
+        </form>
+      
+    
+</body>
+
+</html>

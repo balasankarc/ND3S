@@ -8,7 +8,7 @@ import pango
 class Base:
 
     def compareinit(self, widget):
-        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u" ഇപ്പോ സൗകര്യമില്ല   ")
+        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u"Not yet implemented")
         dialog.set_title("Compare")
         dialog.run()
         dialog.destroy()
@@ -81,7 +81,6 @@ class Base:
         self.fixed.put(self.file1button, 10, 80)
         self.fixed.put(self.file2button, 600, 80)
         self.label1.set_markup(u"Near Duplicate Document Detection System for <span color='#ffffff'><b>മലയാളം</b></span>")
- #       self.window.connect("button-click-event",self.windowclick)
         self.fixed.put(self.label1, 10, 30)
         self.helpbox = gtk.VBox(spacing=30)
         self.thresholdtext = gtk.Entry()
