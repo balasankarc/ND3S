@@ -3,15 +3,34 @@
 import gtk
 import sys
 import pango
-
+import sentencer
 
 class Base:
 
     def compareinit(self, widget):
-        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u"Not yet implemented")
-        dialog.set_title("Compare")
-        dialog.run()
-        dialog.destroy()
+        if files[0] == "":
+            dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"File 1 not chosen")
+            dialog.set_title("Error")
+            dialog.runt()
+            dialog.destroy()
+        elif files[1] == "":
+            dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"File 2 not chosen")
+            dialog.set_title("Error")
+            dialog.runt()
+            dialog.destroy()
+        else:
+            ngramdict1 = sentencer.sentencer(files[0])
+            ngramdict2 = sentencer.sentencer(files[1])
+            result = comparator(ngramdict1, ngramdict2)
+            dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u"The percentage similarity is " + str(result) + "%")
+            dialog.run()
+            dialog.destroy()
+
+
+        #dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u"Not yet implemented")
+        #dialog.set_title("Compare")
+        #dialog.run()
+        #dialog.destroy()
 
     def windowclick(self, widget):
         print "Here:"
@@ -27,8 +46,10 @@ class Base:
             inputfile = dialog.get_filenames()
             filetext = str(open(inputfile[0]).read())
             if data[0] == "File1":
+                self.files[0] = inputfile
                 self.file1content.get_buffer().set_text(filetext)
             else:
+                self.files[1] = inputfile
                 self.file2content.get_buffer().set_text(filetext)
         dialog.destroy()
 
@@ -102,6 +123,7 @@ class Base:
         self.window.show()
         self.window.show_all()
         self.window.maximize()
+        self.files = []
 
     def main(self):
         gtk.main()

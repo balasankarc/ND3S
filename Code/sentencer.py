@@ -4,12 +4,13 @@ import inflection
 import ngrams
 
 
-def sentencer():
-    in1 = open("text.txt", "r")
+def sentencer(inpfile):
+    in1 = open(inpfile,"r")
     content = str(in1.read())
     txt = ' '.join(content.split())
     txt = content.split(".")
     root_dict = dict()
+    ngram_dict = dict()
     linecounter = 1
     for i in txt:
         currentline = i.strip()
@@ -21,9 +22,11 @@ def sentencer():
         print "Line Number : " + str(linenumber)
         print "Number of words = " + str(len(rootlist))
         ngram = ngrams.ngrams(rootlist, 2)
+        ngram_dict[linenumber] = ngram
         for item in ngram:
             for i in item:
                 print i
         print ""
+    return ngram_dict
 
 sentencer()
