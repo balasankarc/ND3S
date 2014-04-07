@@ -4,24 +4,29 @@ import gtk
 import sys
 import pango
 import sentencer
-
+import comparator
 class Base:
 
     def compareinit(self, widget):
-        if files[0] == "":
+        if len(self.files) == 0:
+            dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"No file chosen")
+            dialog.set_title("Error")
+            dialog.run()
+            dialog.destroy()
+        elif self.files[0] == "":
             dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"File 1 not chosen")
             dialog.set_title("Error")
             dialog.runt()
             dialog.destroy()
-        elif files[1] == "":
+        elif self.files[1] == "":
             dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"File 2 not chosen")
             dialog.set_title("Error")
             dialog.runt()
             dialog.destroy()
         else:
-            ngramdict1 = sentencer.sentencer(files[0])
-            ngramdict2 = sentencer.sentencer(files[1])
-            result = comparator(ngramdict1, ngramdict2)
+            ngramdict1 = sentencer.sentencer(self.files[0])
+            ngramdict2 = sentencer.sentencer(self.files[1])
+            result = comparator.comparator(ngramdict1, ngramdict2)
             dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u"The percentage similarity is " + str(result) + "%")
             dialog.run()
             dialog.destroy()
@@ -45,13 +50,13 @@ class Base:
         if response == gtk.RESPONSE_OK:
             inputfile = dialog.get_filenames()
             filetext = str(open(inputfile[0]).read())
+            self.files.append(inputfile[0])
             if data[0] == "File1":
-                self.files[0] = inputfile
                 self.file1content.get_buffer().set_text(filetext)
-            else:
-                self.files[1] = inputfile
+            if data[0] == "File2":
                 self.file2content.get_buffer().set_text(filetext)
         dialog.destroy()
+
 
     def closewindow(self, widget):
         """Function to terminate the program"""
