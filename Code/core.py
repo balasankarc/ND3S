@@ -24,9 +24,13 @@ class Base:
             dialog.runt()
             dialog.destroy()
         else:
-            ngramdict1 = sentencer.sentencer(self.files[0])
-            ngramdict2 = sentencer.sentencer(self.files[1])
-            result = comparator.comparator(ngramdict1, ngramdict2)
+            ngramdict1_1 = sentencer.sentencer(self.files[0])
+            ngramdict2_1 = sentencer.sentencer(self.files[1])
+            result1 = comparator.comparator(ngramdict1_1, ngramdict2_1)
+            ngramdict1_2 = sentencer.sentencer(self.files[1])
+            ngramdict2_2 = sentencer.sentencer(self.files[0])
+            result2 = comparator.comparator(ngramdict1_2, ngramdict2_2)
+            result = min(result1,result2)
             dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u"The percentage similarity is " + str(result) + "%")
             dialog.run()
             dialog.destroy()
@@ -70,7 +74,7 @@ class Base:
 
     def helpfunction(self, widget):
         """Function to display Help dialog"""
-        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, "Open the two files using the File Choose Buttons. \n\nThe contents of the files will be displayed in the respective textboxes.\n\nSpecify the threshold value ,above which the similarity should mean data fraud, in the textbox provided at the bottom.\n\nClick the Compare button to get the result.")
+        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, "Open the two files using the File Choose Buttons. \n\nThe contents of the files will be displayed in the respective textboxes.\n\nClick the Compare button to get the result.")
         dialog.set_title("Help")
         dialog.run()
         dialog.destroy()

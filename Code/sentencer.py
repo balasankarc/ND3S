@@ -23,7 +23,7 @@ def sentencer(inpfile):
     for linenumber, rootlist in root_dict.iteritems():
         print "Line Number : " + str(linenumber)
         print "Number of root words = " + str(len(rootlist))
-        ngram = ngrams.ngrams(rootlist, 2)
+        ngram = ngrams.ngrams(rootlist, 1)
         ngram_dict[linenumber] = ngram
 #        for item in ngram:
             #for i in item:
