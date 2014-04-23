@@ -50,7 +50,13 @@ class Base:
         if response == gtk.RESPONSE_OK:
             inputfile = dialog.get_filenames()
             filetext = str(open(inputfile[0]).read())
-            self.files.append(inputfile[0])
+            if len(self.files) == 2:
+                if data[0] == "File1":
+                    self.files[0] = inputfile[0]
+                else:
+                    self.files[1] = inputfile[0]
+            else:
+                self.files.append(inputfile[0])
             if data[0] == "File1":
                 self.file1content.get_buffer().set_text(filetext)
             if data[0] == "File2":
@@ -110,8 +116,8 @@ class Base:
         self.fixed.put(self.label1, 10, 30)
         self.helpbox = gtk.VBox(spacing=30)
         self.thresholdtext = gtk.Entry()
-        self.thresholdtext.set_text("Threshold")
-        self.thresholdtext.connect("focus-in-event",self.changethreshold)
+        #self.thresholdtext.set_text("Threshold")
+        #self.thresholdtext.connect("focus-in-event",self.changethreshold)
         self.exitbutton = gtk.Button("Exit")
         self.exitbutton.connect("clicked", self.closewindow)
         self.helpbutton = gtk.Button("Help")
@@ -119,7 +125,7 @@ class Base:
         self.comparebutton = gtk.Button("Compare!")
         self.comparebutton.connect("clicked",self.compareinit)
         self.helpbox.set_size_request(100, 300)
-        self.helpbox.pack_start(self.thresholdtext)
+        #self.helpbox.pack_start(self.thresholdtext)
         self.helpbox.pack_start(self.comparebutton)
         self.helpbox.pack_start(self.exitbutton)
         self.helpbox.pack_start(self.helpbutton)

@@ -9,24 +9,26 @@ def sentencer(inpfile):
     content = str(in1.read())
     txt = ' '.join(content.split())
     txt = content.split(".")
+    del(txt[-1])
     root_dict = dict()
     ngram_dict = dict()
     linecounter = 1
     for i in txt:
         currentline = i.strip()
+        print "Current Line : " + currentline
         root_list = inflection.stem(currentline)
         root_dict[linecounter] = root_list
         linecounter += 1
     in1.close()
     for linenumber, rootlist in root_dict.iteritems():
         print "Line Number : " + str(linenumber)
-        print "Number of words = " + str(len(rootlist))
+        print "Number of root words = " + str(len(rootlist))
         ngram = ngrams.ngrams(rootlist, 2)
         ngram_dict[linenumber] = ngram
-        for item in ngram:
-            for i in item:
-                print i
-        print ""
+#        for item in ngram:
+            #for i in item:
+                #print i
+        #print ""
     return ngram_dict
 
-sentencer()
+#sentencer()
