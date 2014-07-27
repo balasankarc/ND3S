@@ -18,10 +18,15 @@ class Base:
             dialog.set_title("Error")
             dialog.run()
             dialog.destroy()
-        elif len(self.files) < 2:
-            dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"Only one file chosen")
+        elif self.files[0] == "":
+            dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"File 1 not chosen")
             dialog.set_title("Error")
-            dialog.run()
+            dialog.runt()
+            dialog.destroy()
+        elif self.files[1] == "":
+            dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, u"File 2 not chosen")
+            dialog.set_title("Error")
+            dialog.runt()
             dialog.destroy()
         else:
             ngramdict1_1 = sentencer.sentencer(self.files[0])
@@ -68,10 +73,8 @@ class Base:
                 self.files.append(inputfile[0])
             if data[0] == "File1":
                 self.file1content.get_buffer().set_text(filetext)
-                self.filename1.set_text(inputfile[0])
             if data[0] == "File2":
                 self.file2content.get_buffer().set_text(filetext)
-                self.filename2.set_text(inputfile[0])
         dialog.destroy()
 
 
@@ -81,7 +84,7 @@ class Base:
 
     def helpfunction(self, widget):
         """Function to display Help dialog"""
-        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, "Open the two files using the File Choose Buttons. \n\nThe contents of the files will be displayed in the respective textboxes.\n\nMention the threshold (optional), similarity above which should indicate plagiarism.\n\nClick the Compare button to get the result.")
+        dialog = gtk.MessageDialog(self.window, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, "Open the two files using the File Choose Buttons. \n\nThe contents of the files will be displayed in the respective textboxes.\n\nClick the Compare button to get the result.")
         dialog.set_title("Help")
         dialog.run()
         dialog.destroy()
@@ -117,18 +120,12 @@ class Base:
         self.scrollwindow2.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         self.scrollwindow1.set_shadow_type(type=gtk.SHADOW_ETCHED_IN)
         self.scrollwindow2.set_shadow_type(type=gtk.SHADOW_ETCHED_IN)
-        self.filename1 = gtk.Label()
-        self.filename1.set_text("")
-        self.filename2 = gtk.Label()
-        self.filename2.set_text("")
         self.file1content.set_size_request(500, 500)
         self.fixed.put(self.scrollwindow1, 10, 120)
         self.file2content.set_size_request(500, 500)
         self.fixed.put(self.scrollwindow2, 600, 120)
         self.fixed.put(self.file1button, 10, 80)
-        self.fixed.put(self.filename1,140,80)
         self.fixed.put(self.file2button, 600, 80)
-        self.fixed.put(self.filename2,730,80)
         self.label1.set_markup(u"Near Duplicate Document Detection System for <span color='#ffffff'><b>മലയാളം</b></span>")
         self.fixed.put(self.label1, 10, 30)
         self.helpbox = gtk.VBox(spacing=30)
